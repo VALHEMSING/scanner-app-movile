@@ -17,7 +17,7 @@ Este proyecto es una aplicación móvil desarrollada con **React Native + Expo (
 ## 1. Crear proyecto
 
 ```bash
-$ npx create-expo-app@latest --template
+npx create-expo-app@latest --template
 ```
 
 ## 2. Seleccionar la plantilla a trabajar...
@@ -32,4 +32,16 @@ $ npx create-expo-app@latest --template
 
 ```bash
 cd <nombre-proyecto>
+```
+
+## 4. Dependencias generales...
+
+```bash
+
+```
+
+## 5. Dependencias de desarrollo
+
+```bash
+
 ```
