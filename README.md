@@ -16,7 +16,7 @@ Este proyecto es una aplicación móvil desarrollada con **React Native + Expo (
 
 ## 1. Crear proyecto
 
-""" bash
+"""bash
 npx create-expo-app@latest --template
 
 """
