@@ -22,14 +22,14 @@ $ npx create-expo-app@latest --template
 
 ## 2. Seleccionar la plantilla a trabajar...
 
-""" bash
+```bash
 
 > blank (TypeScript)
 
-"""
+```
 
 ## 3. Ingresar al proyecto
 
-""" bash
+```bash
 cd <nombre-proyecto>
-"""
+```
