@@ -1,65 +1,6 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "baseUrl": "./src",
-    "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@controllers/*": [
-        "controllers/*"
-      ],
-      "@models/*": [
-        "models/*"
-      ],
-      "@services/*": [
-        "services/*"
-      ],
-      "@utils/*": [
-        "utils/*"
-      ],
-      "@middlewares/*": [
-        "middlewares/*"
-      ],
-      "@interfaces/*": [
-        "interfaces/*"
-      ],
-      "@routes/*": [
-        "routes/*"
-      ],
-      "@config/*": [
-        "config/*"
-      ],
-      "@types/*": [
-        "types/*"
-      ],
-      "@enums/*": [
-        "enums/*"
-      ],
-      "@dtos/*": [
-        "dtos/*"
-      ],
-      "@views/*": [
-        "views/*"
-      ]
-    }
-  },
-  "include": [
-    "src/**/*",
-    "nativewind-env.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
-  "ts-node": {
-    "require": [
-      "tsconfig-paths/register"
-    ]
+    "strict": true
   }
 }
