@@ -1,6 +1,65 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true
-  }
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "commonjs",
+        "strict": true,
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "baseUrl": "./src",
+        "moduleResolution": "node",
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "paths": {
+            "@controllers/*": [
+                "controllers/*"
+            ],
+            "@models/*": [
+                "models/*"
+            ],
+            "@services/*": [
+                "services/*"
+            ],
+            "@utils/*": [
+                "utils/*"
+            ],
+            "@middlewares/*": [
+                "middlewares/*"
+            ],
+            "@interfaces/*": [
+                "interfaces/*"
+            ],
+            "@routes/*": [
+                "routes/*"
+            ],
+            "@config/*": [
+                "config/*"
+            ],
+            "@types/*": [
+                "types/*"
+            ],
+            "@enums/*": [
+                "enums/*"
+            ],
+            "@dtos/*": [
+                "dtos/*"
+            ],
+            "@views/*": [
+                "views/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "ts-node": {
+        "require": [
+            "tsconfig-paths/register"
+        ]
+    }compilerOptions": {"strict": true
+}
 }
