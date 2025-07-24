@@ -10,14 +10,14 @@ Este proyecto es una aplicación móvil desarrollada con **React Native + Expo (
 - [Expo CLI](https://docs.expo.dev/get-started/installation/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Expo Go (en tu celular Android o iOS)](https://expo.dev/client)
-- [Nativewind (https://www.nativewind.dev/)]
+- [Nativewind](https://www.nativewind.dev/)
 
 ---
 
 ## 1. Crear proyecto
 
 """bash
-npx create-expo-app@latest --template
+$ npx create-expo-app@latest --template
 
 """
 
