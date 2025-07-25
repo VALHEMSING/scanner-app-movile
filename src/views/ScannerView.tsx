@@ -1,10 +1,15 @@
-import { ScrollView, View, Text, Alert, useColorScheme, Dimensions } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  Alert,
+  useColorScheme,
+  Dimensions,
+} from "react-native";
 import { Button, Card, Divider, Title, Snackbar } from "react-native-paper";
 import CustomSlider from "../components/CustomSileder";
 import { useCallback, useRef, useState } from "react";
 import { engineFourServices } from "../services/engineFour.services";
-
-
 
 const DEBOUNCE_DELAY = 300; // ms
 const { width } = Dimensions.get("window");
@@ -21,8 +26,7 @@ const CICLOS_PRESETS = [
   { label: "3", value: 3 },
 ];
 export const ScannerView = () => {
-
-     // Estados
+  // Estados
   const [ciclo, setCiclo] = useState(1);
   const [angulo, setAngulo] = useState(0);
   const [altura, setAltura] = useState(50);
@@ -34,8 +38,6 @@ export const ScannerView = () => {
   const [loading, setLoading] = useState(false);
   const [loadingMotor, setLoadingMotor] = useState(false);
   const [manualDarkMode, setManualDarkMode] = useState<boolean | null>(null);
-
-
 
   const [isMovingForward, setIsMovingForward] = useState(false);
   const [isMovingBackward, setIsMovingBackward] = useState(false);
@@ -53,18 +55,17 @@ export const ScannerView = () => {
     ancho: null as NodeJS.Timeout | null,
   });
   const isMounted = useRef(true);
- const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark";
 
-     const colors = {
-    background: isDark ? 'dark:bg-dark-bg' : 'bg-light-bg',
-    card: isDark ? 'dark:bg-dark-card' : 'bg-light-card',
-    text: isDark ? '#1c1c1c' : '#1e1e1e',
-    sliderTrack: isDark ? '#e56b6b' : '#ed862b',
-    sliderActive: isDark ? '#696663' : '#7fdeff',
-    sliderThumb: isDark ? '#696663' : '#7fdeff',
+  const colors = {
+    background: isDark ? "dark:bg-dark-bg" : "bg-light-bg",
+    card: isDark ? "dark:bg-dark-card" : "bg-light-card",
+    text: isDark ? "#1c1c1c" : "#1e1e1e",
+    sliderTrack: isDark ? "#e56b6b" : "#ed862b",
+    sliderActive: isDark ? "#696663" : "#7fdeff",
+    sliderThumb: isDark ? "#696663" : "#7fdeff",
   };
-
 
   // Función genérica con debounce
   const createDebouncedHandler = (type: "angulo" | "altura" | "ancho") =>
@@ -94,12 +95,12 @@ export const ScannerView = () => {
             lastSentValues.current[type] = value;
           }
         } catch (error) {
-              console.error(`Error en ${type}:`, error);
+          console.error(`Error en ${type}:`, error);
         }
       }, DEBOUNCE_DELAY);
     }, []);
 
-     const handleAnguloChange = createDebouncedHandler("angulo");
+  const handleAnguloChange = createDebouncedHandler("angulo");
   return (
     <ScrollView
       className=" flex-1 p-8 pt-4 "
@@ -113,7 +114,7 @@ export const ScannerView = () => {
                 <Text className="font-extrabold">Configuración Wi-Fi</Text>
               </Title>
             </View>
-            
+
             <View className="items-start p-3 mt-2 rounded-xl  border">
               <Text>
                 <Text className="font-semibold">Red: </Text>
@@ -121,7 +122,7 @@ export const ScannerView = () => {
               </Text>
               <Text className="my-1">
                 <Text className="font-semibold">Contraseña: </Text>
-                <Text className="font-extrabold">12334456</Text>
+                <Text className="font->xtrabold">12334456</Text>
               </Text>
             </View>
           </View>
@@ -131,9 +132,9 @@ export const ScannerView = () => {
       <Card>
         <Card.Content className="border-2 rounded-xl">
           <View className="items-center justify-center">
-            <Title className="font-bold">Ajustes del Scanner</Title>    
+            <Title className="font-bold">Ajustes del Scanner</Title>
           </View>
-          <Divider/>
+          <Divider />
           <CustomSlider
             title="Inclinación del sensor"
             value={angulo}
@@ -147,8 +148,20 @@ export const ScannerView = () => {
             maxTrackColor={colors.sliderTrack}
             textColor={colors.text}
           />
-
+          <Divider />
         </Card.Content>
+      </Card>
+
+      <Card className="mt-4">
+        <Card.Content className="border-2 rounded-xl">
+          <View className="items-center justify-centes">
+            <Title>
+              <Text>Otros ajustes</Text>
+            </Title>
+          </View>
+          <Divider />
+        </Card.Content>
+        |
       </Card>
     </ScrollView>
   );
