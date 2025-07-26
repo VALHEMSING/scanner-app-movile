@@ -86,7 +86,25 @@ export const ScannerView = () => {
 
   return (
     <ScrollView className="flex-1 p-4">
-      <Card className="mb-4">
+      <Card>
+        <Card.Content className="border-2 rounded-xl">
+          <View className="items-center justify-center">
+            <Title className="font-bold">Configuración WiFi</Title>
+          </View>
+          <View className="p-4 border-2 rounded-xl bg-zinc-600">
+            <Text className="my-1">
+              <Text className="font-semibold">RED: </Text>
+              <Text>jfdifajiof</Text>
+            </Text>
+            <Text className="my-1">
+              <Text className="font-semibold">Contraseña:</Text>
+              <Text>1233456</Text>
+            </Text>
+          </View>
+        </Card.Content>
+      </Card>
+
+      <Card className="my-4">
         <Card.Content className="border-2 rounded-xl p-4">
           <Title className="text-center font-bold text-lg dark:text-white">
             Control de Ángulo (0° - 90°)
