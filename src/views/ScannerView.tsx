@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   useColorScheme,
 } from "react-native";
-import { Card, Divider, Title, Snackbar } from "react-native-paper";
+import { Button, Card, Divider, Title, Snackbar } from "react-native-paper";
 import { useState, useEffect, useRef } from "react";
 import { engineFourServices } from "../services/engineFour.services";
 
@@ -105,8 +105,32 @@ export const ScannerView = () => {
       </Card>
 
       <Card className="my-4">
+        <Card.Content className="border-2 rounded-xl">
+          <Title className=" m-auto font-bold items-center justify-center text-center">
+            Ajustes de placa de madera
+          </Title>
+          <Divider className="my-2" />
+          <View className="items-center my-4">
+            <Text>Presiona para mover la placa</Text>
+          </View>
+          <View className="flex-row justify-around">
+            <TouchableOpacity
+              className={`w-20 h-20 border-2 rounded-full items-center justify-center bg-red-600`}
+            >
+              <Text className="text-white text-3xl">-</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className={`w-20 h-20 border-2 rounded-full items-center justify-center bg-blue-400`}
+            >
+              <Text className="text-white text-3xl">+</Text>
+            </TouchableOpacity>
+          </View>
+        </Card.Content>
+      </Card>
+
+      <Card className="my-4">
         <Card.Content className="border-2 rounded-xl p-4">
-          <Title className="text-center font-bold text-lg dark:text-white">
+          <Title className=" m-auto font-bold text-lg dark:text-white">
             Control de Ángulo (0° - 90°)
           </Title>
           <Divider className="my-2" />
@@ -117,11 +141,11 @@ export const ScannerView = () => {
             </Text>
           </View>
 
-          <View className="flex-row justify-around mt-4">
+          <View className="flex-row justify-around ">
             {/* Botón para disminuir */}
             <TouchableOpacity
-              className={`w-20 h-20 rounded-full items-center justify-center 
-                ${angulo <= 0 ? "bg-gray-400" : "bg-blue-500"}`}
+              className={`w-20 h-20 border-2 rounded-full items-center justify-center 
+                ${angulo <= 0 ? "bg-gray-400" : "bg-red-500"}`}
               disabled={angulo <= 0}
               onPressIn={() => handlePressIn(-1)}
               onPressOut={handlePressOut}
@@ -132,7 +156,7 @@ export const ScannerView = () => {
 
             {/* Botón para aumentar */}
             <TouchableOpacity
-              className={`w-20 h-20 rounded-full items-center justify-center 
+              className={`w-20 h-20 border-2 rounded-full items-center justify-center 
                 ${angulo >= 90 ? "bg-gray-400" : "bg-blue-500"}`}
               disabled={angulo >= 90}
               onPressIn={() => handlePressIn(1)}
@@ -145,10 +169,32 @@ export const ScannerView = () => {
         </Card.Content>
       </Card>
 
+      <Card className="my-4">
+        <Card.Content>
+          <View></View>
+        </Card.Content>
+      </Card>
+
+      <Card>
+        <Card.Content>
+          <Title className="font-bold m-auto">Otras opciones</Title>
+          <Divider className="my-2" />
+          <View className="flex-col gap-3 my-2">
+            <Button mode="contained" icon="restart">
+              Reiniciar
+            </Button>
+            <Button mode="contained" icon="camera">
+              Escanear
+            </Button>
+            <Button>Detener</Button>
+          </View>
+        </Card.Content>
+      </Card>
+
       <Snackbar
         visible={snackbar.visible}
         onDismiss={() => setSnackbar({ ...snackbar, visible: false })}
-        duration={1500}
+        duration={3500}
         wrapperStyle={{ bottom: 80 }}
       >
         {snackbar.message}
