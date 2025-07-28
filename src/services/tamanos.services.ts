@@ -9,7 +9,7 @@ export const tamanosServices = {
     tamanoDos: async () => {
         await fetch(`${ESP32_URL}/tamano2`)
     },
-    tamanoTrees: async () => {
+    tamanoTres: async () => {
         await fetch(`${ESP32_URL}/tamano3`)
     }
 }

@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   useColorScheme,
+  Dimensions,
 } from "react-native";
 import { Button, Card, Divider, Title, Snackbar } from "react-native-paper";
 import { useState, useEffect, useRef } from "react";
@@ -12,9 +13,23 @@ import { engineOneServices } from "../services/engineOne.services";
 import { useOrderAction } from "../hooks/useOrderAction";
 import { scannerServices } from "../services/scanner.services";
 import { emergencyServices } from "../services/emergency.services";
+import { ALTURAS_PRESETS } from "../constants/alturas.constants";
+import { tamanosServices } from "../services/tamanos.services";
+import { Header } from "../components/Header";
+
+
+
+
+
+const { width } = Dimensions.get("window");
+const isSmallScreen = width < 375; // iPhone SE y dispositivos pequeños
 
 export const ScannerView = () => {
+  // Decontruir
   const { execute } = useOrderAction();
+
+  // --> Estados
+  const [altura, setAltura] = useState(0)
   const [isScanning, setIsScanning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [angulo, setAngulo] = useState<number>(0);
@@ -22,10 +37,16 @@ export const ScannerView = () => {
     visible: false,
     message: "",
   });
+  const [loading, setLoading] = useState(false)
+
+  // Refernacias
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const angleRef = useRef(0); // Referencia para el valor actual
   const directionRef = useRef(0); // Dirección actual (0 = detenido, 1 = subiendo, -1 = bajando)
-  const isDark = useColorScheme() === "dark";
+
+  const lastSentValues = useRef({
+    altura: -1
+  })
 
   // Sincronizar la referencia con el estado
   useEffect(() => {
@@ -141,15 +162,34 @@ export const ScannerView = () => {
     }
   };
 
+  const handleAlturaPreset = async (value: number) => {
+    setAltura(value)
+    switch(value) {
+      case 1: 
+      await tamanosServices.tamanoUno()
+      break;
+      case 2: 
+      await tamanosServices.tamanoDos()
+      break;
+      case 3: 
+      await tamanosServices.tamanoTres()
+      break;
+      default: 
+      console.warn('Altura invalida')
+    }
+  }
+
   return (
     <ScrollView
-      className="flex-1 px-7"
-      contentContainerStyle={{ paddingBottom: 40 }}
+      className="flex-1 px-1"
+      contentContainerStyle={{ paddingBottom: 40,  }}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       bounces={true}
     >
-      <Card>
+              <Header />
+      
+      <Card className="mt-5  mx-16 dark:bg-dark-cardBackgraund">
         <Card.Content className="border-2 rounded-xl dark:bg-dark-cardBackgraund">
           <View className="items-center justify-center">
             <Title>
@@ -169,7 +209,7 @@ export const ScannerView = () => {
         </Card.Content>
       </Card>
 
-      <Card className="my-4">
+      <Card className="my-4 mx-16">
         <Card.Content className="border-2 rounded-xl dark:bg-dark-cardBackgraund">
           <Title className=" dark:text-dark-title m-auto font-bold items-center justify-center text-center">
             Ajustes de placa de madera
@@ -208,7 +248,7 @@ export const ScannerView = () => {
       </Card>
 
       {/* Card encargado del movimiento del sensor*/}
-      <Card className="my-4">
+      <Card className="my-4 mx-16">
         <Card.Content className="border-2 rounded-xl p-4 dark:bg-dark-cardBackgraund">
           <Title className=" m-auto font-bold text-lg dark:text-white">
             Control de Ángulo (0° - 90°)
@@ -249,17 +289,33 @@ export const ScannerView = () => {
         </Card.Content>
       </Card>
 
-      <Card className="my-4">
-        <Card.Content>
+      <Card className="my-4 mx-16">
+        <Card.Content className="border-2 rounded-xl">
           <Title className="font-bold m-auto">Alturas</Title>
           <Divider />
-          <View className=" flex-row gap-2">
-
+          <View className="my-3 m-auto flex-row gap-6">
+            {ALTURAS_PRESETS.map((preset, index) => (
+              <View key={index} className="rounded-full overflow-hidden">
+                <Button
+              mode={altura === preset.value ? "contained" : "outlined"}
+              onPress={() => handleAlturaPreset(preset.value)}
+              labelStyle={{fontSize: 16 }}
+              >
+                {preset.label}
+              </Button>
+              
+              </View>
+              
+            ))}
           </View>
+
+          <Text className="m-auto">
+            Altura actual: {altura}
+          </Text>
         </Card.Content>
       </Card>
 
-      <Card>
+      <Card className="mx-16 mt-4">
         <Card.Content className="border-2 rounded-xl dark:bg-dark-cardBackgraund">
           <Title className="font-bold m-auto">Otras opciones</Title>
           <Divider className="my-2" />
@@ -276,13 +332,22 @@ export const ScannerView = () => {
               {isScanning ? "Cancelar escaneo" : "Escanear"}
             </Button>
           </View>
-          <View className="px-5 mx-5">
+          <View className="m-auto gap-2 my-2 flex-row rounded-full">
             <Button
               mode="contained"
               icon={isPaused ? "play" : "pause"}
               onPress={handlePauseToggle}
             >
               {isPaused ? "Reanudar" : "Pausar"}
+            </Button>
+
+            <Button
+
+            mode="contained"
+            icon="stop"
+            buttonColor="red"
+            >
+              Detener
             </Button>
           </View>
         </Card.Content>
