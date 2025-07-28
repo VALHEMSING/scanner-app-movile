@@ -10,9 +10,13 @@ import { useState, useEffect, useRef } from "react";
 import { engineFourServices } from "../services/engineFour.services";
 import { engineOneServices } from "../services/engineOne.services";
 import { useOrderAction } from "../hooks/useOrderAction";
+import { scannerServices } from "../services/scanner.services";
+import { emergencyServices } from "../services/emergency.services";
 
 export const ScannerView = () => {
   const { execute } = useOrderAction();
+  const [isScanning, setIsScanning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [angulo, setAngulo] = useState<number>(0);
   const [snackbar, setSnackbar] = useState({
     visible: false,
@@ -84,6 +88,56 @@ export const ScannerView = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
+    }
+  };
+
+  // Manjejar scanner
+  const handleScantoggle = async () => {
+    try {
+      if (isScanning) {
+        await scannerServices.stopedScanner();
+        setSnackbar({
+          visible: true,
+          message: "Escaneo cancelado...",
+        });
+      } else {
+        await scannerServices.startScanner();
+        setSnackbar({
+          visible: true,
+          message: "Escaneo iniciado...",
+        });
+      }
+      setIsScanning(!isScanning);
+    } catch (e) {
+      console.error("Error al alternar escaneo", e);
+      setSnackbar({
+        visible: true,
+        message: "Error al controlar el scanner",
+      });
+    }
+  };
+
+  // Manejador de pausa y reanudar
+  const handlePauseToggle = async () => {
+    try {
+      await emergencyServices.pause(); // Mismo endpoint
+
+      const nextPausedState = !isPaused;
+
+      setIsPaused(nextPausedState); // Actualizamos el estado
+
+      setSnackbar({
+        visible: true,
+        message: nextPausedState
+          ? "El escaneo fue pausado exitosamente"
+          : "El escaneo se ha reanudado",
+      });
+    } catch (e) {
+      console.error("Error al cambiar el estado de pausa:", e);
+      setSnackbar({
+        visible: true,
+        message: "Error al enviar la solicitud de pausa/reanudar",
+      });
     }
   };
 
@@ -207,13 +261,22 @@ export const ScannerView = () => {
             <Button mode="contained" icon="restart">
               Reiniciar
             </Button>
-            <Button mode="contained" icon="camera">
-              Escanear
+            <Button
+              mode="contained"
+              icon={isScanning ? "close" : "camera"}
+              onPress={handleScantoggle}
+              buttonColor={isScanning ? "#D32F2F" : "#1976D2"}
+            >
+              {isScanning ? "Cancelar escaneo" : "Escanear"}
             </Button>
           </View>
           <View className="px-5 mx-5">
-            <Button mode="contained" icon="stop">
-              Detener
+            <Button
+              mode="contained"
+              icon={isPaused ? "play" : "pause"}
+              onPress={handlePauseToggle}
+            >
+              {isPaused ? "Reanudar" : "Pausar"}
             </Button>
           </View>
         </Card.Content>
