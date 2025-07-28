@@ -85,7 +85,13 @@ export const ScannerView = () => {
   };
 
   return (
-    <ScrollView className="flex-1 p-4">
+    <ScrollView
+      className="flex-1 px-7"
+      contentContainerStyle={{ paddingBottom: 40 }}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+      bounces={true}
+    >
       <Card>
         <Card.Content className="border-2 rounded-xl">
           <View className="items-center justify-center">
@@ -128,6 +134,7 @@ export const ScannerView = () => {
         </Card.Content>
       </Card>
 
+      {/* Card encargado del movimiento del sensor*/}
       <Card className="my-4">
         <Card.Content className="border-2 rounded-xl p-4">
           <Title className=" m-auto font-bold text-lg dark:text-white">
@@ -179,14 +186,18 @@ export const ScannerView = () => {
         <Card.Content>
           <Title className="font-bold m-auto">Otras opciones</Title>
           <Divider className="my-2" />
-          <View className="flex-col gap-3 my-2">
+          <View className=" m-auto flex-row gap-3 my-2">
             <Button mode="contained" icon="restart">
               Reiniciar
             </Button>
             <Button mode="contained" icon="camera">
               Escanear
             </Button>
-            <Button>Detener</Button>
+          </View>
+          <View className="px-5 mx-5">
+            <Button mode="contained" icon="stop">
+              Detener
+            </Button>
           </View>
         </Card.Content>
       </Card>
