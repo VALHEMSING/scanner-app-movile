@@ -251,7 +251,11 @@ export const ScannerView = () => {
 
       <Card className="my-4">
         <Card.Content>
-          <View></View>
+          <Title className="font-bold m-auto">Alturas</Title>
+          <Divider />
+          <View className=" flex-row gap-2">
+
+          </View>
         </Card.Content>
       </Card>
 
