@@ -150,9 +150,11 @@ export const ScannerView = () => {
       bounces={true}
     >
       <Card>
-        <Card.Content className="border-2 rounded-xl">
+        <Card.Content className="border-2 rounded-xl dark:bg-dark-cardBackgraund">
           <View className="items-center justify-center">
-            <Title className="font-bold">Configuración WiFi</Title>
+            <Title>
+              <Text className="font-bold">Configuración WiFi</Text>
+            </Title>
           </View>
           <View className="p-4 border-2 rounded-xl bg-zinc-600">
             <Text className="my-1">
@@ -168,8 +170,8 @@ export const ScannerView = () => {
       </Card>
 
       <Card className="my-4">
-        <Card.Content className="border-2 rounded-xl">
-          <Title className=" m-auto font-bold items-center justify-center text-center">
+        <Card.Content className="border-2 rounded-xl dark:bg-dark-cardBackgraund">
+          <Title className=" dark:text-dark-title m-auto font-bold items-center justify-center text-center">
             Ajustes de placa de madera
           </Title>
           <Divider className="my-2" />
@@ -207,7 +209,7 @@ export const ScannerView = () => {
 
       {/* Card encargado del movimiento del sensor*/}
       <Card className="my-4">
-        <Card.Content className="border-2 rounded-xl p-4">
+        <Card.Content className="border-2 rounded-xl p-4 dark:bg-dark-cardBackgraund">
           <Title className=" m-auto font-bold text-lg dark:text-white">
             Control de Ángulo (0° - 90°)
           </Title>
@@ -254,7 +256,7 @@ export const ScannerView = () => {
       </Card>
 
       <Card>
-        <Card.Content>
+        <Card.Content className="border-2 rounded-xl dark:bg-dark-cardBackgraund">
           <Title className="font-bold m-auto">Otras opciones</Title>
           <Divider className="my-2" />
           <View className=" m-auto flex-row gap-3 my-2">
