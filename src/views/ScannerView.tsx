@@ -8,8 +8,11 @@ import {
 import { Button, Card, Divider, Title, Snackbar } from "react-native-paper";
 import { useState, useEffect, useRef } from "react";
 import { engineFourServices } from "../services/engineFour.services";
+import { engineOneServices } from "../services/engineOne.services";
+import { useOrderAction } from "../hooks/useOrderAction";
 
 export const ScannerView = () => {
+  const { execute } = useOrderAction();
   const [angulo, setAngulo] = useState<number>(0);
   const [snackbar, setSnackbar] = useState({
     visible: false,
@@ -122,6 +125,20 @@ export const ScannerView = () => {
           <View className="flex-row justify-around">
             <TouchableOpacity
               className={`w-20 h-20 border-2 rounded-full items-center justify-center bg-red-600`}
+              onPress={() =>
+                execute({
+                  action: engineOneServices.moveLeft,
+                  succesMessages: "Motor a la izquierda",
+                  errorMessages: "Error al mover a la izquierda",
+                })
+              }
+              onPressOut={() =>
+                execute({
+                  action: engineOneServices.stop,
+                  succesMessages: "Motor detenido",
+                  errorMessages: "Error al detener el motor",
+                })
+              }
             >
               <Text className="text-white text-3xl">-</Text>
             </TouchableOpacity>
