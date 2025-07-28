@@ -7,4 +7,7 @@ export const engineOneServices = {
   moveLeft: async () => {
     await fetch(`${ESP32_URL}/startLeft1`);
   },
+  stop: async () => {
+    await fetch(`${ESP32_URL}/stope1`);
+  },
 };
