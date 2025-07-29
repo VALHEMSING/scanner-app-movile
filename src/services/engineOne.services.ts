@@ -8,6 +8,6 @@ export const engineOneServices = {
     await fetch(`${ESP32_URL}/startLeft1`);
   },
   stop: async () => {
-    await fetch(`${ESP32_URL}/stope1`);
+    await fetch(`${ESP32_URL}/stop1`);
   },
 };

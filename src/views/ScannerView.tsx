@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   useColorScheme,
   Dimensions,
+  Pressable,
 } from "react-native";
 import { Button, Card, Divider, Title, Snackbar } from "react-native-paper";
 import { useState, useEffect, useRef } from "react";
@@ -16,6 +17,7 @@ import { emergencyServices } from "../services/emergency.services";
 import { ALTURAS_PRESETS } from "../constants/alturas.constants";
 import { tamanosServices } from "../services/tamanos.services";
 import { Header } from "../components/Header";
+import { cameraServices } from "../services/camera.services";
 
 const { width } = Dimensions.get("window");
 const isSmallScreen = width < 375; // iPhone SE y dispositivos pequeños
@@ -82,31 +84,6 @@ export const ScannerView = () => {
       }
     };
   }, []);
-
-  // Manejar presión de botón
-  const handlePressIn = (direction: number) => {
-    directionRef.current = direction;
-
-    // Cambio inmediato
-    updateAngle(angleRef.current + direction);
-
-    // Iniciar intervalo para cambios continuos
-    if (!intervalRef.current) {
-      intervalRef.current = setInterval(() => {
-        updateAngle(angleRef.current + directionRef.current);
-      }, 150);
-    }
-  };
-
-  // Manejar liberación de botón
-  const handlePressOut = () => {
-    directionRef.current = 0;
-
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
 
   // Manjejar scanner
   const handleScantoggle = async () => {
@@ -232,7 +209,7 @@ export const ScannerView = () => {
             <View className="flex-row justify-around">
               <TouchableOpacity
                 className={`w-20 h-20 border-2 rounded-full items-center justify-center bg-red-600`}
-                onPress={() =>
+                onPressIn={() =>
                   execute({
                     action: engineOneServices.moveLeft,
                     succesMessages: "Motor a la izquierda",
@@ -251,6 +228,20 @@ export const ScannerView = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 className={`w-20 h-20 border-2 rounded-full items-center justify-center bg-blue-400`}
+                onPressIn={() =>
+                  execute({
+                    action: engineOneServices.moveRight,
+                    succesMessages: "Motor encendido",
+                    errorMessages: "Error",
+                  })
+                }
+                onPressOut={() =>
+                  execute({
+                    action: engineOneServices.stop,
+                    succesMessages: "Motor detenido",
+                    errorMessages: "Error al detener el motor",
+                  })
+                }
               >
                 <Text className="text-white text-3xl">+</Text>
               </TouchableOpacity>
@@ -262,24 +253,29 @@ export const ScannerView = () => {
         <Card className="my-4 mx-5">
           <Card.Content className="border-2 rounded-xl p-4 dark:bg-dark-cardBackgraund">
             <Title className=" m-auto font-bold text-lg dark:text-white">
-              Control de Ángulo (0° - 90°)
+              Control de Ángulo
             </Title>
             <Divider className="my-2" />
-
-            <View className="items-center mt-4">
-              <Text className="text-3xl font-bold dark:text-cyan-300">
-                {angulo}°
-              </Text>
-            </View>
 
             <View className="flex-row justify-around ">
               {/* Botón para disminuir */}
               <TouchableOpacity
                 className={`w-20 h-20 border-2 rounded-full items-center justify-center 
                 ${angulo <= 0 ? "bg-gray-400" : "bg-red-500"}`}
-                disabled={angulo <= 0}
-                onPressIn={() => handlePressIn(-1)}
-                onPressOut={handlePressOut}
+                onPressIn={() =>
+                  execute({
+                    action: cameraServices.down,
+                    succesMessages: "Motor de subida",
+                    errorMessages: "error",
+                  })
+                }
+                onPressOut={() =>
+                  execute({
+                    action: cameraServices.stop,
+                    succesMessages: "Motor detenido",
+                    errorMessages: "Error al detener el motor",
+                  })
+                }
                 activeOpacity={0.7}
               >
                 <Text className="text-white text-3xl">-</Text>
@@ -290,8 +286,20 @@ export const ScannerView = () => {
                 className={`w-20 h-20 border-2 rounded-full items-center justify-center 
                 ${angulo >= 90 ? "bg-gray-400" : "bg-blue-500"}`}
                 disabled={angulo >= 90}
-                onPressIn={() => handlePressIn(1)}
-                onPressOut={handlePressOut}
+                onPressIn={() =>
+                  execute({
+                    action: cameraServices.up,
+                    succesMessages: "Motor de subida",
+                    errorMessages: "error",
+                  })
+                }
+                onPressOut={() =>
+                  execute({
+                    action: cameraServices.stop,
+                    succesMessages: "Motor detenido",
+                    errorMessages: "Error al detener el motor",
+                  })
+                }
                 activeOpacity={0.7}
               >
                 <Text className="text-white text-3xl">+</Text>
@@ -324,19 +332,28 @@ export const ScannerView = () => {
 
         <Card className="mx-5 mt-4">
           <Card.Content className="border-2 rounded-xl dark:bg-dark-cardBackgraund">
-            <Title className="font-bold m-auto">Otras opciones</Title>
+            <Title className="font-bold m-auto">Opciones de scanneo</Title>
             <Divider className="my-2" />
             <View className=" m-auto flex-row gap-3 my-2">
-              <Button mode="contained" icon="restart">
+              <Button mode="contained" icon="close"
+              onPress={() => execute({
+                action: scannerServices.stopedScanner,
+                succesMessages:"Cancelando escaneo",
+                errorMessages: "Error al cancelar escaneo"
+              })}
+              >
                 Reiniciar
               </Button>
               <Button
                 mode="contained"
                 icon={isScanning ? "close" : "camera"}
-                onPress={handleScantoggle}
-                buttonColor={isScanning ? "#D32F2F" : "#1976D2"}
+                onPress={() => execute({
+                action: scannerServices.startScanner,
+                succesMessages:"Iniciando escaneo",
+                errorMessages: "Error al iniciiar escaneo"
+              })}
               >
-                {isScanning ? "Cancelar escaneo" : "Escanear"}
+                {isScanning ? "Cancelar" : "Escanear"}
               </Button>
             </View>
             <View className="m-auto gap-2 my-2 flex-row rounded-full">
