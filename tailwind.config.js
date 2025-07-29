@@ -13,12 +13,15 @@ module.exports = {
           title: "#a4cefc",
           track: "#d3d3d3",
           active: "#4CAF50",
-          thumb: "#4CAF50", // Título en claro
+          borderColor: "#ccc",
+          bgBorder: "#1c1c1e",
         },
         dark: {
           background: "#0F172A",
           cardBackgraund: "#2D3748",
           title: "#E2E8F0",
+          borderColor: "#444",
+          bgBorder: "#ffffff",
         },
       },
     },
