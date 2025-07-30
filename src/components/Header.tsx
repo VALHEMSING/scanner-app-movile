@@ -1,7 +1,7 @@
 import { View, Text, useColorScheme, StatusBar, Platform } from "react-native";
 import { HeaderProps } from "../types/headerProps";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { LinearGradient } from "expo-linear-gradient";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { BlurView } from "expo-blur";
 
 export const Header = ({ title = "Scanner" }: HeaderProps) => {
