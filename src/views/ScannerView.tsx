@@ -10,7 +10,7 @@ import {
 import { Button, Card, Divider, Title, Snackbar } from "react-native-paper";
 import { useState, useEffect, useRef } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { engineFourServices } from "../services/engineFour.services";
+import {  MaterialCommunityIcons } from "@expo/vector-icons";
 import { engineOneServices } from "../services/engineOne.services";
 import { useOrderAction } from "../hooks/useOrderAction";
 import { scannerServices } from "../services/scanner.services";
@@ -22,15 +22,10 @@ import { cameraServices } from "../services/camera.services";
 import { ESCANER_PASSWORD, ESCANER_SSID } from "../constants/constants";
 
 const { width } = Dimensions.get("window");
-const isSmallScreen = width < 375; // iPhone SE y dispositivos pequeños
 
 export const ScannerView = () => {
   const isDark = useColorScheme() === "dark";
-  const accent = isDark ? "#0A9396" : "#00B4C0";
-  const btnSize = isSmallScreen ? "w-24 h-12" : "w-28 h-14";
-  const labelSize = isSmallScreen ? "text-base" : "text-lg";
-  const titleSize = isSmallScreen ? "text-2xl" : "text-3xl";
-  const btnWidth = isSmallScreen ? "w-36" : "w-40"; // mismo ancho para todos
+
   // Decontruir
   const { execute } = useOrderAction();
 
@@ -43,8 +38,6 @@ export const ScannerView = () => {
     visible: false,
     message: "",
   });
-  const [loading, setLoading] = useState(false);
-
   // Refernacias
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const angleRef = useRef(0); // Referencia para el valor actual
@@ -133,7 +126,7 @@ export const ScannerView = () => {
           <Card.Content className="border-2 rounded-xl bg-light-cardBackgraund dark:bg-dark-cardBackgraund">
             <View className="items-center justify-center ">
               <Text className=" text-light-title dark:text-dark-title font-bold text-2xl mb-3  ">
-                Configuración WiFi
+                Conectese a la red
               </Text>
             </View>
             <View className="p-4 border-2 rounded-xl ">
@@ -163,10 +156,10 @@ export const ScannerView = () => {
           <Card.Content className="border-2 rounded-xl bg-light-cardBackgraund dark:bg-dark-cardBackgraund">
             <View className="items-center justify-center">
               <Text className=" text-light-title dark:text-dark-title font-bold text-xl">
-                Ajustes de placa de madera
+                Ancho del objeto
               </Text>
             </View>
-            <Divider className="my-4" />
+            <Divider className="my-3" />
             <View className="items-center mt-1 mb-4"></View>
             <View className="flex-row justify-around items-center ">
               {/* Izquierda */}
@@ -182,6 +175,7 @@ export const ScannerView = () => {
                     action: engineOneServices.moveLeft,
                     succesMessages: "Motor a la izquierda",
                     errorMessages: "Error al mover a la izquierda",
+                    silent: true,
                   })
                 }
                 onPressOut={() =>
@@ -189,6 +183,7 @@ export const ScannerView = () => {
                     action: engineOneServices.stop,
                     succesMessages: "Motor detenido",
                     errorMessages: "Error al detener el motor",
+                    silent: true,
                   })
                 }
                 activeOpacity={0.1}
@@ -213,6 +208,7 @@ export const ScannerView = () => {
                     action: engineOneServices.moveRight,
                     succesMessages: "Motor a la derecha",
                     errorMessages: "Error",
+                    silent: true,
                   })
                 }
                 onPressOut={() =>
@@ -220,6 +216,7 @@ export const ScannerView = () => {
                     action: engineOneServices.stop,
                     succesMessages: "Motor detenido",
                     errorMessages: "Error al detener el motor",
+                    silent: true,
                   })
                 }
                 activeOpacity={0.1}
@@ -239,11 +236,11 @@ export const ScannerView = () => {
           <Card.Content className="border-2 rounded-xl p-4 bg-light-cardBackgraund dark:bg-dark-cardBackgraund">
             <View className=" items-center justify-center ">
               <Text className=" text-light-title dark:text-dark-title font-bold text-xl ">
-                Control del scanner
+                Inclinación del scanner
               </Text>
             </View>
 
-            <Divider className="my-4" />
+            <Divider className="my-3" />
 
             <View className="flex-row justify-around pt-3 ">
               {/* Botón para disminuir */}
@@ -259,6 +256,7 @@ export const ScannerView = () => {
                     action: cameraServices.down,
                     succesMessages: "Motor de subida",
                     errorMessages: "error",
+                    silent: true,
                   })
                 }
                 onPressOut={() =>
@@ -266,6 +264,7 @@ export const ScannerView = () => {
                     action: cameraServices.stop,
                     succesMessages: "Motor detenido",
                     errorMessages: "Error al detener el motor",
+                    silent: true,
                   })
                 }
                 activeOpacity={0.1}
@@ -279,7 +278,7 @@ export const ScannerView = () => {
 
               {/* Botón para aumentar */}
               <TouchableOpacity
-                className={` bg-light-touchs
+                className={`
       w-20 h-15 rounded-full items-center justify-center
       bg-gradient-to-br from-blue-500 to-blue-700
       shadow-md shadow-blue-500/40
@@ -291,6 +290,7 @@ export const ScannerView = () => {
                     action: cameraServices.up,
                     succesMessages: "Motor de subida",
                     errorMessages: "error",
+                    silent: true,
                   })
                 }
                 onPressOut={() =>
@@ -298,6 +298,7 @@ export const ScannerView = () => {
                     action: cameraServices.stop,
                     succesMessages: "Motor detenido",
                     errorMessages: "Error al detener el motor",
+                    silent: true,
                   })
                 }
                 activeOpacity={0.1}
@@ -313,50 +314,33 @@ export const ScannerView = () => {
         </Card>
 
         <Card className="my-4 mx-5">
-          <Card.Content className="border-2 rounded-xl bg-light-cardBackgraund dark:bg-dark-cardBackgraund py-4 px-3">
-            {/* Título */}
-            <Text
-              className={`font-bold m-auto text-center mb-3 ${titleSize}`}
-              style={{ color: accent }}
-            >
-              Alturas
-            </Text>
-
-            {/* Botones */}
-            <View className="flex-row justify-center gap-3 my-4">
-              {ALTURAS_PRESETS.map(({ label, value }) => {
-                const isActive = altura === value;
-                return (
+          <Card.Content className="border-2 rounded-xl bg-light-cardBackgraund dark:bg-dark-cardBackgraund">
+            <View className="items-center justify-center">
+              <Text className=" text-light-title dark:text-dark-title font-bold text-xl ">
+                Alturas (cm)
+              </Text>
+            </View>
+            <Divider className="my-2" />
+            <View className="my-3 m-auto flex-row gap-6">
+              {ALTURAS_PRESETS.map((preset, index) => (
+                <View key={index} className="rounded-full overflow-hidden text">
                   <Button
-                    key={value}
-                    onPress={() => handleAlturaPreset(value)}
-                    className={`
-                      w-full
-                  ${btnSize} rounded-full items-center justify-center border-2
-                  ${isActive ? "border-transparent" : "border-neutral-300 dark:border-neutral-600"}
-                `}
-                    style={{
-                      backgroundColor: isActive ? accent : "transparent",
-                    }}
+                    className=""
+                    mode={altura === preset.value ? "contained" : "outlined"}
+                    onPress={() => handleAlturaPreset(preset.value)}
+                    labelStyle={{ fontSize: 20 }}
+                    buttonColor={isDark ? "#0a9396" : "#00B4C0"}
                   >
-                    <Text
-                      className={`font-bold ${labelSize} ${
-                        isActive
-                          ? "text-white"
-                          : "text-neutral-500 dark:text-neutral-400"
-                      }`}
-                    >
-                      {label}
-                    </Text>
+                    {preset.label}
                   </Button>
-                );
-              })}
+                </View>
+              ))}
             </View>
 
-            {/* Texto final */}
             <Text
-              className={`text-center font-semibold ${labelSize}`}
-              style={{ color: accent }}
+              className={`m-auto text-lg font-semibold ${
+                isDark ? "text-white" : "text-red-950"
+              }`}
             >
               Altura actual: {altura}
             </Text>
@@ -369,8 +353,10 @@ export const ScannerView = () => {
               Opciones de escaneo
             </Text>
 
+            <Divider />
+
             {/* Fila 1 */}
-            <View className="flex-row justify-center gap-3 mb-3">
+            <View className="flex-row justify-center gap-3 my-3">
               <Button
                 mode="contained"
                 icon="close"
@@ -381,6 +367,7 @@ export const ScannerView = () => {
                     action: scannerServices.stopedScanner,
                     succesMessages: "Cancelando escaneo",
                     errorMessages: "Error al cancelar escaneo",
+                    silent: true,
                   })
                 }
               >
@@ -397,6 +384,7 @@ export const ScannerView = () => {
                     action: scannerServices.startScanner,
                     succesMessages: "Iniciando escaneo",
                     errorMessages: "Error al iniciar escaneo",
+                    silent: true,
                   })
                 }
               >
@@ -408,15 +396,26 @@ export const ScannerView = () => {
             <View className="flex-row justify-center gap-3">
               <Button
                 mode="contained"
-                icon={isPaused ? "play" : "pause"}
+                //icon={isPaused ? "play" : "pause"}
                 buttonColor="#10B981"
                 style={{ minWidth: 140 }}
                 onPress={handlePauseToggle}
               >
-                {isPaused ? "Reanudar" : "Pausar"}
+                <MaterialCommunityIcons
+                  name="play-pause"
+                  size={24}
+                  color="black"
+                  style={{ transform: [{ rotate: "90deg" }] }}
+                />
               </Button>
 
               <Button
+                onPress={() =>
+                  execute({
+                    action: emergencyServices.stopEmergncy,
+                    silent: true,
+                  })
+                }
                 mode="contained"
                 icon="stop"
                 buttonColor="#EF4444"

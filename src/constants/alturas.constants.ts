@@ -3,3 +3,4 @@ export const ALTURAS_PRESETS = [
     {label: "2", value: 2},
     {label: "3", value: 3},
 ]
+
