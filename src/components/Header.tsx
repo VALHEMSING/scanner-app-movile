@@ -1,24 +1,63 @@
-import { View, Text, useColorScheme } from "react-native";
+import { View, Text, useColorScheme, StatusBar, Platform } from "react-native";
 import { HeaderProps } from "../types/headerProps";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { LinearGradient } from "expo-linear-gradient";
+import { BlurView } from "expo-blur";
 
 export const Header = ({ title = "Scanner" }: HeaderProps) => {
   const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark";
+
   return (
-    <View
-      className={`pt-14 flex-row justify-center items-center rounded-br-full rounded-bl-full border-2 dark:border-zinc-900 bg-light-title dark:bg-dark-title`}
-    >
-      <View className="flex-row items-center gap-2">
-        <AntDesign
-          name="scan1"
-          size={32}
-          color={colorScheme === "dark" ? "#c1c1c1c1" : "#2f0e07"}
-          className="mb-3 "
+    <View>
+      {/* StatusBar dinámico */}
+      <StatusBar
+        barStyle={isDark ? "light-content" : "dark-content"}
+        backgroundColor="transparent"
+        translucent
+      />
+
+      {/* Header con glassmorphism */}
+      <BlurView
+        intensity={90}
+        tint={isDark ? "dark" : "light"}
+        className="py-2 pt-4 rounded-3xl overflow-hidden"
+      >
+        <LinearGradient
+          colors={
+            isDark
+              ? ["rgba(59, 130, 246, 0.2)", "rgba(30, 41, 59, 0.8)"]
+              : ["rgba(59, 130, 246, 0.1)", "rgba(243, 244, 246, 0.9)"]
+          }
+          className="absolute inset-0"
         />
-        <Text className="text-3xl font-bold mb-3 text-slate-500 dark:text-zinc-600">
-          {title}
-        </Text>
-      </View>
+
+        <View className="flex-row items-center justify-center gap-4">
+          <View className="w-14 h-14 rounded-full bg-blue-500/20 items-center justify-center">
+            <AntDesign
+              name="scan1"
+              size={32}
+              color={isDark ? "#60a5fa" : "#3b82f6"}
+            />
+          </View>
+
+          <Text
+            className={`text-4xl font-bold ${
+              isDark ? "text-white" : "text-slate-900"
+            }`}
+            style={{
+              textShadowColor: isDark ? "#60a5fa40" : "#3b82f640",
+              textShadowOffset: { width: 0, height: 2 },
+              textShadowRadius: 6,
+            }}
+          >
+            {title}
+          </Text>
+        </View>
+
+        {/* Línea decorativa animada */}
+        <View className="mt-4 h-0.5 w-1/3 mx-auto rounded-full bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+      </BlurView>
     </View>
   );
 };
