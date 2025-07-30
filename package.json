@@ -12,6 +12,8 @@
     "@expo/metro-runtime": "^5.0.4",
     "@expo/vector-icons": "^14.1.0",
     "expo": "~53.0.20",
+    "expo-blur": "^14.1.5",
+    "expo-linear-gradient": "^14.1.5",
     "expo-status-bar": "~2.2.3",
     "nativewind": "^4.1.23",
     "react": "19.0.0",
