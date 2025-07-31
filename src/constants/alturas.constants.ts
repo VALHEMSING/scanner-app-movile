@@ -1,6 +1,6 @@
 export const ALTURAS_PRESETS = [
-    {label: "1", value: 1},
-    {label: "2", value: 2},
-    {label: "3", value: 3},
+    {label: "40", value: 1},
+    {label: "100", value: 2},
+    {label: "160", value: 3},
 ]
 

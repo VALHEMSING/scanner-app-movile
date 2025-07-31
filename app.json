@@ -4,34 +4,35 @@
     "slug": "scanner-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/scan-svgrepo-com.svg",  
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/scan-svgrepo-com.svg",
+      "resizeMode": "contain", 
+      "backgroundColor": "#F54927"
     },
     "ios": {
-  "supportsTablet": true,
-  "bundleIdentifier": "com.IUDC.Scanner3D",  
-  "buildNumber": "1.0.0",
-  "infoPlist": {
-    "NSCameraUsageDescription": "Esta app usa la cámara para escanear objetos 3D.",
-    "NSPhotoLibraryUsageDescription": "Acceso a la galería para guardar capturas."
-  }
-},
+      "supportsTablet": true,
+      "bundleIdentifier": "com.IUDC.Scanner3D",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Esta app usa la cámara para escanear objetos 3D.",
+        "NSPhotoLibraryUsageDescription": "Acceso a la galería para guardar capturas."
+      },
+      "icon": "./assets/scan-svgrepo-com.svg"  
+    },
     "android": {
       "package": "com.IUDC.Scanner3D",
       "minSdkVersion": 20,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/scan-svgrepo-com.svg",
+        "backgroundColor": "#F54927"
       },
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.ico"
     },
     "plugins": [
       [
