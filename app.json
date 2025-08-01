@@ -4,12 +4,12 @@
     "slug": "scanner-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/scan-svgrepo-com.svg",  
+    "icon": "./assets/barcode-scanner.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/scan-svgrepo-com.svg",
-      "resizeMode": "contain", 
+      "image": "./assets/barcode-scanner.png",
+      "resizeMode": "contain",
       "backgroundColor": "#F54927"
     },
     "ios": {
@@ -20,13 +20,12 @@
         "NSCameraUsageDescription": "Esta app usa la cámara para escanear objetos 3D.",
         "NSPhotoLibraryUsageDescription": "Acceso a la galería para guardar capturas."
       },
-      "icon": "./assets/scan-svgrepo-com.svg"  
+      "icon": "./assets/barcode-scanner.png"
     },
     "android": {
       "package": "com.IUDC.Scanner3D",
-      "minSdkVersion": 20,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/scan-svgrepo-com.svg",
+        "foregroundImage": "./assets/barcode-scanner.png",
         "backgroundColor": "#F54927"
       },
       "edgeToEdgeEnabled": true
@@ -43,6 +42,11 @@
           ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ed0a09f1-528c-405b-a81a-2edbd5938aac"
+      }
+    }
   }
 }

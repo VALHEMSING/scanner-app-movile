@@ -10,7 +10,7 @@ import {
 import { Button, Card, Divider, Title, Snackbar } from "react-native-paper";
 import { useState, useEffect, useRef } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import {  MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { engineOneServices } from "../services/engineOne.services";
 import { useOrderAction } from "../hooks/useOrderAction";
 import { scannerServices } from "../services/scanner.services";
@@ -315,21 +315,18 @@ export const ScannerView = () => {
 
         <Card className="my-4 mx-5">
           <Card.Content className="border-2 rounded-xl bg-light-cardBackgraund dark:bg-dark-cardBackgraund">
-            <View className="items-center justify-center">
-              <Text className=" text-light-title dark:text-dark-title font-bold text-xl ">
-                Alturas (cm)
-              </Text>
-            </View>
-            <Divider className="my-2" />
-            <View className="my-3 m-auto flex-row gap-6">
+            <View
+              className="flex-row justify-center gap-4 flex-wrap"
+              style={{ rowGap: 12, columnGap: 12 }}
+            >
               {ALTURAS_PRESETS.map((preset, index) => (
-                <View key={index} className="rounded-full overflow-hidden text">
+                <View key={index} className="rounded-full overflow-hidden">
                   <Button
-                    className=""
                     mode={altura === preset.value ? "contained" : "outlined"}
                     onPress={() => handleAlturaPreset(preset.value)}
                     labelStyle={{ fontSize: 20 }}
                     buttonColor={isDark ? "#0a9396" : "#00B4C0"}
+                    style={{ minWidth: 100 }}
                   >
                     {preset.label}
                   </Button>
@@ -338,9 +335,8 @@ export const ScannerView = () => {
             </View>
 
             <Text
-              className={`m-auto text-lg font-semibold ${
-                isDark ? "text-white" : "text-red-950"
-              }`}
+              className={`m-auto text-lg font-semibold ${isDark ? "text-white" : "text-red-950"
+                }`}
             >
               Altura actual: {altura}
             </Text>
@@ -355,25 +351,11 @@ export const ScannerView = () => {
 
             <Divider />
 
-            {/* Fila 1 */}
-            <View className="flex-row justify-center gap-3 my-3">
-              <Button
-                mode="contained"
-                icon="close"
-                buttonColor="#F59E0B"
-                style={{ minWidth: 140 }}
-                onPress={() =>
-                  execute({
-                    action: scannerServices.stopedScanner,
-                    succesMessages: "Cancelando escaneo",
-                    errorMessages: "Error al cancelar escaneo",
-                    silent: true,
-                  })
-                }
-              >
-                Reiniciar
-              </Button>
-
+            {/* Fila 1 actualizada con flex-wrap */}
+            <View
+              className="flex-row flex-wrap justify-center"
+              style={{ rowGap: 12, columnGap: 12, marginTop: 12 }}
+            >
               <Button
                 mode="contained"
                 icon={isScanning ? "close" : "camera"}
@@ -390,13 +372,9 @@ export const ScannerView = () => {
               >
                 Escanear
               </Button>
-            </View>
 
-            {/* Fila 2 */}
-            <View className="flex-row justify-center gap-3">
               <Button
                 mode="contained"
-                //icon={isPaused ? "play" : "pause"}
                 buttonColor="#10B981"
                 style={{ minWidth: 140 }}
                 onPress={handlePauseToggle}
@@ -408,6 +386,30 @@ export const ScannerView = () => {
                   style={{ transform: [{ rotate: "90deg" }] }}
                 />
               </Button>
+
+              <Button
+                mode="contained"
+                icon="close"
+                buttonColor="#F59E0B"
+                style={{ minWidth: 140 }}
+                onPress={() =>
+                  execute({
+                    action: scannerServices.stopedScanner,
+                    succesMessages: "Cancelando escaneo",
+                    errorMessages: "Error al cancelar escaneo",
+                    silent: true,
+                  })
+                }
+              >
+                Reiniciar
+              </Button>
+            </View>
+
+            {/* Fila 2 actualizada con flex-wrap */}
+            <View
+              className="flex-row flex-wrap justify-center"
+              style={{ rowGap: 12, columnGap: 12, marginTop: 12 }}
+            >
 
               <Button
                 onPress={() =>
@@ -426,6 +428,7 @@ export const ScannerView = () => {
             </View>
           </Card.Content>
         </Card>
+
 
         <Snackbar
           visible={snackbar.visible}
